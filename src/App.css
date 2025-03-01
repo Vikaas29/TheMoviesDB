@@ -1,0 +1,22 @@
+body{
+  /* background-color: #FFEDFA; */
+
+  background-color: white;
+}
+*{
+  font-family: monospace;
+}
+
+.individualEventAnimation{
+  animation: entry .5s linear ;
+
+}
+@keyframes entry {
+  0%{
+    scale: .5;
+  }
+  100%{
+    scale: 1;
+  }
+  
+}
