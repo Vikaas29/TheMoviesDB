@@ -25,7 +25,7 @@ const Search = () => {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_API_KEY}&query=${query}`
+        `https://api.themoviedb.org/3/search/movie?api_key=d0bcda8ffa75a0d26760665ceca2e99f&query=${query}`
       );
       if (!response.ok) {
         throw new Error('Failed to fetch search results');

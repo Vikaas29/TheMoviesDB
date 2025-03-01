@@ -15,7 +15,7 @@ const Movie = () => {
 
       try {
         const detailedResponse = await fetch(
-          `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+          `https://api.themoviedb.org/3/movie/${movieId}?api_key=d0bcda8ffa75a0d26760665ceca2e99f`
         );
 
         if (!detailedResponse.ok) {
