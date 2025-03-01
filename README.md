@@ -16,8 +16,8 @@ Packages/Frameworks used  - Tailwind CSS, ReactJS, React-Router
 
 
 ## Hosting 
-### VERCEL - 
+### VERCEL - https://the-movies-db-two.vercel.app/
 
 
 
-## Git Repo - 
+## Git Repo - https://github.com/Vikaas29/TheMoviesDB
