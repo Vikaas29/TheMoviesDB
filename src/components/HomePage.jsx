@@ -1,4 +1,3 @@
-// HomePage.jsx
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
@@ -73,6 +72,17 @@ const HomePage = () => {
     setCurrentPage(pageNumber);
   };
 
+  if(isLoading){
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-900">
+        <div className="flex flex-col items-center space-y-4">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>
+            <p className="text-lg text-gray-300">Loading...</p>
+        </div>
+        </div>
+    )
+  }
+
   return (
     <div className={`relative min-h-screen ${bgColor} ${textColor} overflow-hidden`}>
       {randomBackdrop && (
@@ -104,18 +114,21 @@ const HomePage = () => {
       </header>
       <main className="relative p-4 z-10">
         {trendingMovies.length > 0 && (
-          <div className="mb-4 w-full">
-            <div className="group relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" onClick={() => navigate(`/movie/${trendingMovies[0].id}`)}>
+          <div className="mb-4 w-full relative overflow-hidden rounded-xl shadow-lg">
+            <div
+              className="group relative transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer"
+              onClick={() => navigate(`/movie/${trendingMovies[0].id}`)}
+            >
               <img
                 src={`https://image.tmdb.org/t/p/w500${trendingMovies[0].poster_path}`}
                 alt={trendingMovies[0].title}
                 className="w-full h-[500px] object-cover rounded-t-xl"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900 opacity-0 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-4">
-                <h3 className="text-xl font-semibold mb-2 text-white drop-shadow-lg">
+              <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-b from-transparent to-black">
+                <h3 className="text-3xl font-bold mb-2 text-white drop-shadow-lg">
                   {trendingMovies[0].title}
                 </h3>
-                <p className="text-md text-gray-300 drop-shadow-md">
+                <p className="text-lg text-gray-300 drop-shadow-md">
                   Rating: {trendingMovies[0].vote_average}
                 </p>
                 <div
@@ -124,7 +137,7 @@ const HomePage = () => {
                     backgroundImage: `url(https://image.tmdb.org/t/p/w500${trendingMovies[0].backdrop_path})`,
                   }}
                 ></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900 opacity-10 group-hover:opacity-20 transition-opacity duration-300 "></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
               </div>
             </div>
           </div>
