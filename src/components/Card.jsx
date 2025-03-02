@@ -1,4 +1,4 @@
-
+// Card.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const Card = ({ movie }) => {
         alt={movie.title}
         className="w-full h-64 object-cover rounded-t-xl"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900 opacity-0 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-4">
+      <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-b from-transparent to-black">
         <h3 className="text-xl font-semibold mb-2 text-white drop-shadow-lg">
           {movie.title}
         </h3>
@@ -33,7 +33,7 @@ const Card = ({ movie }) => {
             backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
           }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900 opacity-10 group-hover:opacity-20 transition-opacity duration-300 "></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
       </div>
     </div>
   );

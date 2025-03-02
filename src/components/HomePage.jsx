@@ -1,3 +1,4 @@
+// HomePage.jsx
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +8,10 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [randomBackdrop, setRandomBackdrop] = useState('');
-  const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 8; // Adjust as needed
+  const moviesPerPage = 8;
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const fetchTrendingMovies = async () => {
@@ -58,32 +59,22 @@ const HomePage = () => {
   const gradientTo = darkMode ? 'to-purple-600' : 'to-purple-600';
   const trendingGradientFrom = darkMode ? 'from-purple-400' : 'from-purple-400';
   const trendingGradientTo = darkMode ? 'to-pink-600' : 'to-pink-600';
-  const toggleButtonBg = darkMode ? 'bg-gray-400' : 'bg-gray-700';
-  const toggleButtonHover = darkMode ? 'hover:bg-gray-300' : 'hover:bg-gray-600';
+  const paginationButtonBg = darkMode ? 'bg-indigo-600' : 'bg-gray-200';
+  const paginationButtonText = darkMode ? 'text-white' : 'text-gray-800';
 
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = trendingMovies.slice(indexOfFirstMovie, indexOfLastMovie);
+  const remainingMovies = trendingMovies.slice(1);
+  const currentMovies = remainingMovies.slice(indexOfFirstMovie, indexOfLastMovie);
 
-  const totalPages = Math.ceil(trendingMovies.length / moviesPerPage);
+  const totalPages = Math.ceil(remainingMovies.length / moviesPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  if(isLoading){
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-900">
-        <div className="flex flex-col items-center space-y-4">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>
-            <p className="text-lg text-gray-300">Loading...</p>
-        </div>
-        </div>
-    )
-  }
-
   return (
-    <div className={`relative min-h-screen ${bgColor} ${textColor}`}>
+    <div className={`relative min-h-screen ${bgColor} ${textColor} overflow-hidden`}>
       {randomBackdrop && (
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20 blur-sm"
@@ -105,13 +96,39 @@ const HomePage = () => {
           </button>
           <button
             onClick={toggleDarkMode}
-            className={`${toggleButtonBg} ${toggleButtonHover} text-gray-800 dark:text-white p-2 rounded-md`}
+            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded`}
           >
-            {darkMode ? 'Light' : 'Dark'}
+            {darkMode ? 'Light Mode' : 'Dark Mode'}
           </button>
         </div>
       </header>
       <main className="relative p-4 z-10">
+        {trendingMovies.length > 0 && (
+          <div className="mb-4 w-full">
+            <div className="group relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" onClick={() => navigate(`/movie/${trendingMovies[0].id}`)}>
+              <img
+                src={`https://image.tmdb.org/t/p/w500${trendingMovies[0].poster_path}`}
+                alt={trendingMovies[0].title}
+                className="w-full h-[500px] object-cover rounded-t-xl"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900 opacity-0 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-4">
+                <h3 className="text-xl font-semibold mb-2 text-white drop-shadow-lg">
+                  {trendingMovies[0].title}
+                </h3>
+                <p className="text-md text-gray-300 drop-shadow-md">
+                  Rating: {trendingMovies[0].vote_average}
+                </p>
+                <div
+                  className="absolute inset-0 bg-cover bg-center opacity-10 group-hover:opacity-30 transition-opacity duration-300 blur-sm"
+                  style={{
+                    backgroundImage: `url(https://image.tmdb.org/t/p/w500${trendingMovies[0].backdrop_path})`,
+                  }}
+                ></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900 opacity-10 group-hover:opacity-20 transition-opacity duration-300 "></div>
+              </div>
+            </div>
+          </div>
+        )}
         <h2
           className={`text-2xl font-semibold mb-4 text-gradient bg-clip-text text-transparent bg-gradient-to-r ${trendingGradientFrom} ${trendingGradientTo}`}
         >
@@ -130,7 +147,7 @@ const HomePage = () => {
               className={`mx-1 px-3 py-1 rounded-md ${
                 currentPage === pageNumber
                   ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white'
+                  : `${paginationButtonBg} ${paginationButtonText}`
               }`}
             >
               {pageNumber}
